@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09060f">
+<title>Soham × Sayali — Birthday Surprise</title>
+<style>
+:root{
+  --bg:#07050b;--bg2:#100817;--panel:rgba(24,15,34,.68);--panel2:rgba(255,255,255,.055);
+  --pink:#ff5ca8;--violet:#a978ff;--rose:#ff8bbd;--white:#fff8fd;--muted:#d8cbd9;
+  --line:rgba(255,255,255,.12);--shadow:0 24px 80px rgba(0,0,0,.48);
+  --radius:28px;--max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(circle at 15% 15%,rgba(169,120,255,.12),transparent 28%),
+ radial-gradient(circle at 85% 28%,rgba(255,92,168,.12),transparent 26%),
+ linear-gradient(145deg,#050408,#0c0712 48%,#09050e);color:var(--white);
+ font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ overflow-x:hidden;line-height:1.65}
+body.locked{overflow:hidden}
+button{font:inherit}
+a{color:inherit}
+::selection{background:rgba(255,92,168,.35)}
+.noise{position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+.hidden{display:none!important}
+.container{width:min(calc(100% - 32px),var(--max));margin:auto;position:relative;z-index:3}
+section{position:relative;padding:110px 0}
+.eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.76rem;color:#e7cfe5;font-weight:700}
+h1,h2,h3,p{margin-top:0}
+h1,h2{line-height:1.06}
+h2{font-size:clamp(2rem,5vw,4rem);margin-bottom:18px}
+.lead{color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);max-width:720px}
+.gradient-text{background:linear-gradient(100deg,#fff,#ffb6d7 42%,#b994ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glass{background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid var(--line);box-shadow:var(--shadow),inset 0 1px rgba(255,255,255,.07);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.btn{border:1px solid rgba(255,255,255,.18);color:#fff;background:linear-gradient(135deg,rgba(255,92,168,.92),rgba(145,94,255,.92));padding:14px 21px;border-radius:999px;cursor:pointer;font-weight:800;box-shadow:0 12px 38px rgba(255,92,168,.2);transition:.25s transform,.25s box-shadow,.25s filter}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 18px 45px rgba(255,92,168,.28)}
+.btn.secondary{background:rgba(255,255,255,.07);box-shadow:none}
+.btn:focus-visible,.icon-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#opening{position:fixed;inset:0;z-index:100;background:
+ radial-gradient(circle at 50% 45%,rgba(169,120,255,.18),transparent 34%),
+ linear-gradient(145deg,#030207,#0d0613 58%,#070409);display:grid;place-items:center;padding:24px;transition:opacity .8s,visibility .8s}
+#opening.closed{opacity:0;visibility:hidden;pointer-events:none}
+.opening-inner{text-align:center;max-width:720px}
+.opening-inner .mini{color:#e5d5e6;margin:8px 0 28px}
+.gift{width:145px;height:125px;margin:0 auto 26px;position:relative;filter:drop-shadow(0 0 32px rgba(255,92,168,.35));animation:giftFloat 3s ease-in-out infinite}
+.gift .box{position:absolute;left:15px;right:15px;bottom:8px;height:82px;border-radius:12px 12px 20px 20px;background:linear-gradient(135deg,#ff5ca8,#8f5cff);border:1px solid rgba(255,255,255,.35)}
+.gift .lid{position:absolute;left:5px;right:5px;top:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,#ff8cbd,#9e7aff);border:1px solid rgba(255,255,255,.45);z-index:2}
+.gift .ribbon-v{position:absolute;top:30px;bottom:8px;left:59px;width:26px;background:rgba(255,235,249,.5);z-index:3}
+.gift .bow{position:absolute;top:5px;left:45px;width:56px;height:42px;z-index:4}
+.gift .bow:before,.gift .bow:after{content:"";position:absolute;width:35px;height:27px;border:8px solid #ffd7ea;border-radius:50% 50% 50% 12px;top:2px}
+.gift .bow:before{left:0;transform:rotate(-22deg)}.gift .bow:after{right:0;transform:scaleX(-1) rotate(-22deg)}
+@keyframes giftFloat{50%{transform:translateY(-10px) rotate(1deg)}}
+.opening-inner h1{font-size:clamp(2.3rem,7vw,5rem);margin:0}
+.opening-inner p{font-size:clamp(1.05rem,2.5vw,1.3rem);color:#e2d3e2}
+.opening-note{font-size:.82rem!important;color:#aa9dac!important;margin-top:16px}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:120;overflow:hidden}
+.conf{position:absolute;width:9px;height:14px;top:-20px;animation:confFall 1.9s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes confFall{to{transform:translate3d(var(--x),110vh,0) rotate(var(--r));opacity:0}}
+.hero{min-height:100svh;display:grid;align-items:center;padding-top:80px;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none}
+.orb.one{width:420px;height:420px;background:rgba(167,112,255,.13);top:12%;left:-180px}
+.orb.two{width:340px;height:340px;background:rgba(255,73,159,.1);right:-140px;bottom:5%}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:62px;align-items:center}
+.hero-copy h1{font-size:clamp(3rem,7vw,6.8rem);margin:12px 0 22px;letter-spacing:-.045em}
+.hero-copy .date{display:inline-flex;gap:9px;align-items:center;padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:#ffd4e7}
+.hero-copy .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero-photo{position:relative}
+.photo-frame{padding:11px;border-radius:34px;transform:rotate(2deg);position:relative}
+.photo-frame:after{content:"";position:absolute;inset:-18px;border-radius:42px;background:linear-gradient(135deg,rgba(255,92,168,.3),transparent 50%,rgba(169,120,255,.3));filter:blur(24px);z-index:-1}
+.photo-frame img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:25px}
+.photo-badge{position:absolute;left:-25px;bottom:30px;padding:15px 18px;border-radius:18px;font-weight:800;color:#ffe9f3;transform:rotate(-3deg)}
+.float-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.float{position:absolute;opacity:.55;animation:drift 9s ease-in-out infinite}
+@keyframes drift{50%{transform:translate(20px,-35px) rotate(12deg)}}
+.float.f1{left:6%;top:23%}.float.f2{right:8%;top:18%;animation-delay:1s}.float.f3{left:45%;bottom:14%;animation-delay:2s}.float.f4{right:19%;bottom:25%;animation-delay:3s}
+.music-card{padding:30px;border-radius:var(--radius);max-width:900px;margin:40px auto 0}
+.music-head{display:flex;align-items:center;gap:17px}.disc{width:66px;height:66px;border-radius:50%;background:radial-gradient(circle,#fff 0 8%,#ff8bbb 9% 17%,#24162f 18% 35%,#a978ff 36% 44%,#160d20 45%);box-shadow:0 0 30px rgba(255,92,168,.35);flex:none}
+.playing .disc{animation:spin 4s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.music-title{font-size:1.2rem;font-weight:850}.music-sub{font-size:.9rem;color:#bcaabd}
+.controls{display:flex;align-items:center;gap:12px;margin-top:22px}
+.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;border-radius:50%;width:48px;height:48px;cursor:pointer;font-size:1.1rem}
+.progress{flex:1;display:flex;align-items:center;gap:10px;font-size:.76rem;color:#bbaaba}
+input[type=range]{width:100%;accent-color:#ff6aaa;cursor:pointer}
+.wave{height:44px;display:flex;align-items:center;gap:4px;margin:18px 0 0;padding:0 8px}
+.wave i{display:block;width:4px;border-radius:8px;background:linear-gradient(#ff7eb5,#9e7aff);height:var(--h);opacity:.55}
+.playing .wave i{animation:wave 1s ease-in-out infinite alternate;animation-delay:var(--d)}
+@keyframes wave{to{transform:scaleY(.35);opacity:1}}
+.letter{padding:38px;border-radius:var(--radius);max-width:930px;margin:auto}
+.letter-text{color:#eaddea;font-size:1.03rem}
+.letter-text p{margin:0 0 18px}.letter-text .em{font-weight:800;color:#fff}
+.letter-extra{display:none}.letter.expanded .letter-extra{display:block}.letter.expanded .teaser{display:none}
+.readmore{margin-top:8px}
+.gallery-head{text-align:center;margin-bottom:42px}
+.gallery{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));max-width:620px;margin:auto}
+.memory{padding:10px;border-radius:26px;cursor:pointer;transition:.3s transform,.3s box-shadow;position:relative}
+.memory:hover{transform:translateY(-7px) rotate(-.5deg);box-shadow:0 25px 70px rgba(255,92,168,.17)}
+.memory img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:20px;display:block}
+.memory-info{padding:17px 9px 10px}.memory-info h3{margin-bottom:5px}.memory-info p{color:#bfaebe;font-size:.92rem;margin:0}
+.fun-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:42px}
+.fun-card{padding:22px 16px;border-radius:23px;min-height:155px;text-align:center;cursor:pointer;transition:.25s transform,.25s border-color}
+.fun-card:hover{transform:translateY(-6px);border-color:rgba(255,137,193,.4)}
+.fun-card .emoji{font-size:2rem}.fun-card h3{font-size:1rem;margin:12px 0 0}.fun-card p{font-size:.78rem;color:#bfaebe}
+.romance{text-align:center;overflow:hidden}
+.romance .heart-core{font-size:4rem;display:block;filter:drop-shadow(0 0 28px rgba(255,92,168,.5));animation:heartbeat 1.7s ease-in-out infinite}
+@keyframes heartbeat{15%{transform:scale(1.12)}30%{transform:scale(1)}45%{transform:scale(1.08)}60%{transform:scale(1)}}
+.romance .quote{max-width:760px;margin:0 auto;color:#dbcbdc;font-size:1.12rem}
+.wish-card{padding:50px 30px;text-align:center;border-radius:var(--radius);max-width:900px;margin:auto}
+.wish-list{display:grid;gap:11px;max-width:700px;margin:30px auto;text-align:left}.wish-list div{padding:13px 16px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}
+.wish-big{font-size:clamp(1.6rem,4vw,3rem);font-weight:900;margin-top:34px}
+.mission{max-width:850px;margin:auto}.mission-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:30px}
+.mission-item{padding:17px 19px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line);opacity:0;transform:translateY(16px);transition:.6s}
+.revealed .mission-item{opacity:1;transform:none}.mission-item:nth-child(2){transition-delay:.08s}.mission-item:nth-child(3){transition-delay:.16s}.mission-item:nth-child(4){transition-delay:.24s}.mission-item:nth-child(5){transition-delay:.32s}.mission-item:nth-child(6){transition-delay:.4s}.mission-item:nth-child(7){transition-delay:.48s}.mission-item:nth-child(8){transition-delay:.56s}
+.signature{text-align:center;padding-bottom:120px}.signature-card{max-width:760px;margin:auto;padding:45px 25px;border-radius:var(--radius)}
+.signature .scribble{font-family:"Brush Script MT","Segoe Script",cursive;font-size:clamp(2.4rem,7vw,4.8rem);font-style:italic;margin:20px 0 0}
+#ending{min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;background:#020106}
+#ending .ending-content{position:relative;z-index:3}.ending-line{opacity:0;transform:translateY(20px);animation:endIn 1.2s forwards}.ending-line:nth-child(2){animation-delay:.9s}.ending-line:nth-child(3){animation-delay:1.8s}.ending-line:nth-child(4){animation-delay:3s}.ending-line:nth-child(5){animation-delay:4.2s}
+@keyframes endIn{to{opacity:1;transform:none}}
+.end-heart{font-size:5rem;animation:heartbeat 1.7s ease-in-out infinite;filter:drop-shadow(0 0 35px rgba(255,92,168,.55))}
+.end-stars{position:absolute;inset:0;pointer-events:none}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;box-shadow:0 0 10px #fff;animation:twinkle 2.5s infinite alternate}
+@keyframes twinkle{to{opacity:.15;transform:scale(.5)}}
+.petal{position:fixed;top:-40px;z-index:2;pointer-events:none;opacity:.6;font-size:18px;animation:petalFall linear forwards}
+@keyframes petalFall{to{transform:translate3d(var(--drift),110vh,0) rotate(520deg);opacity:0}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s}.reveal.visible{opacity:1;transform:none}
+.modal-backdrop{position:fixed;inset:0;background:rgba(2,1,6,.8);backdrop-filter:blur(15px);z-index:200;display:grid;place-items:center;padding:20px;opacity:0;visibility:hidden;transition:.3s}
+.modal-backdrop.open{opacity:1;visibility:visible}
+.modal{width:min(560px,100%);padding:28px;border-radius:26px;position:relative;transform:translateY(18px) scale(.98);transition:.3s}.modal-backdrop.open .modal{transform:none}
+.modal h3{font-size:1.4rem}.modal p{color:#ddcddd}.close{position:absolute;right:15px;top:15px}
+.lightbox{padding:16px;width:min(1100px,100%);height:min(92svh,900px);display:grid;grid-template-rows:auto 1fr auto}
+.lightbox-image-wrap{display:grid;place-items:center;overflow:hidden;min-height:0}.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:18px;transform:scale(1);transition:transform .25s;cursor:grab}.lightbox img:active{cursor:grabbing}
+.lightbox-tools{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding-top:10px}.lightbox-tools .icon-btn{width:42px;height:42px}
+.counter{text-align:center;color:#cbbaca;font-size:.85rem;padding:6px}
+.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);z-index:250;background:#160d20;border:1px solid var(--line);padding:12px 17px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:45px}.hero-photo{max-width:570px;margin:auto}.fun-grid{grid-template-columns:repeat(2,1fr)}.fun-card:last-child{grid-column:1/-1}}
+@media(max-width:560px){
+ .container{width:min(calc(100% - 22px),var(--max))}section{padding:80px 0}.hero{padding-top:60px}
+ .hero-copy h1{font-size:clamp(2.7rem,15vw,4.5rem)}.photo-badge{left:8px;bottom:18px}.music-card,.letter,.wish-card,.signature-card{padding:24px 18px}
+ .controls{gap:7px}.progress{gap:6px}.fun-grid{grid-template-columns:1fr 1fr}.fun-card{min-height:145px}.mission-list{grid-template-columns:1fr}
+ .gallery{max-width:100%}.lightbox{padding:9px}.lightbox-tools .icon-btn{width:40px;height:40px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body class="locked">
+<div class="noise"></div>
+
+<div id="opening" aria-modal="true" role="dialog">
+  <div class="opening-inner">
+    <div class="gift" aria-hidden="true"><div class="bow"></div><div class="lid"></div><div class="box"></div><div class="ribbon-v"></div></div>
+    <div class="eyebrow">A little digital memory from Soham</div>
+    <h1 class="gradient-text">Sayali… ❤️</h1>
+    <p>Ek chhota sa surprise aahe tujhya sathi…</p>
+    <p>Soham ne tujhya sathi kahi special banavla aahe 🥹❤️</p>
+    <button class="btn" id="openBtn">Open Your Surprise 🎁</button>
+    <p class="opening-note">Music will not start until you press play.</p>
+  </div>
+</div>
+<div id="confetti"></div>
+
+<main id="main">
+<section class="hero">
+  <div class="orb one"></div><div class="orb two"></div>
+  <div class="float-layer" aria-hidden="true">
+    <span class="float f1">❤️</span><span class="float f2">✨</span><span class="float f3">🌹</span><span class="float f4">🦋</span>
+  </div>
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <div class="eyebrow">A day made for one beautiful person</div>
+      <h1>Happy Birthday <span class="gradient-text">Sayali ❤️</span></h1>
+      <div class="date">🎂 20 August</div>
+      <p class="lead" style="margin-top:24px"><b>Aajcha divas fakt tuzha aahe…</b><br>Ek smile tujhya chehryavar anaychi hoti, mhanun ha chhota sa surprise ❤️</p>
+      <div class="actions"><button class="btn" onclick="document.querySelector('#song').scrollIntoView({behavior:'smooth'})">There’s More ↓</button></div>
+    </div>
+    <div class="hero-photo reveal">
+      <div class="photo-frame glass">
+        <img src="photos/sayali-01.png" alt="Sayali" loading="eager">
+      </div>
+      <div class="photo-badge glass">For Sayali, with a little extra heart ✨</div>
+    </div>
+  </div>
+</section>
+
+<section id="song">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Press play when you're ready</div>
+      <h2>Ek song tujhya sathi <span class="gradient-text">❤️</span></h2>
+      <p class="lead">Kahi feelings words peksha music madhun better express hotat… 🎶</p>
+    </div>
+    <div class="music-card glass reveal" id="musicCard">
+      <audio id="audio" preload="metadata" src="audio/birthday-song.mp3"></audio>
+      <div class="music-head"><div class="disc"></div><div><div class="music-title">Dooron Dooron</div><div class="music-sub">A little soundtrack for your day ❤️</div></div></div>
+      <div class="wave" id="wave" aria-hidden="true"></div>
+      <div class="controls">
+        <button class="icon-btn" id="playBtn" aria-label="Play song">▶</button>
+        <div class="progress"><span id="current">0:00</span><input id="seek" type="range" min="0" max="100" value="0" step=".1" aria-label="Song progress"><span id="duration">0:00</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="letter glass reveal" id="letter">
+      <div class="eyebrow">A few words from Soham</div>
+      <h2>Something I wanted to tell you… 💌</h2>
+      <div class="letter-text">
+        <div class="teaser">
+          <p><b>Dear Sayali ❤️,</b></p>
+          <p>Happy Birthday! आज तुझा दिवस आहे, आणि honestly, मला वाटलं की फक्त “Happy Birthday” text करून थांबणं थोडंसं कमीच होईल. म्हणून हा छोटासा digital surprise. <span class="em">तुझ्या चेहऱ्यावर एक smile यावी, एवढाच simple reason.</span></p>
+          <p>तुझ्यातली एक गोष्ट मला नेहमी आवडते — तू जशी आहेस तशीच राहतेस. तुझं smile, तुझी छोटी छोटी expressions, आणि कधी serious तर कधी अगदी random funny moments… हे सगळं मिळून तुझी vibe वेगळीच बनते.</p>
+        </div>
+        <div class="letter-extra">
+          <p>आपल्या छोट्या छोट्या conversations, अचानक होणारे laughs, काही silly moments आणि काही शांत क्षण — कदाचित ते त्या वेळी खूप मोठे वाटत नसतील, पण नंतर आठवल्यावर कळतं की <span class="em">काही memories फोटोमध्ये नसतात, त्या मनात save होतात.</span></p>
+          <p>कधी कधी तुला tease करणं मजेशीर वाटतं, कधी तुझं reaction बघणं त्याहून मजेशीर 😄 पण त्या सगळ्या मजेमागे एक गोष्ट genuinely आहे — <span class="em">तू माझ्यासाठी special आहेस.</span> तू आसपास असलीस की ordinary moments सुद्धा थोडे better वाटतात.</p>
+          <p>आजच्या दिवशी मला तुझ्यासाठी एकच wish करायची आहे — तू नेहमी happy राहावी. तुझी प्रत्येक छोटी मोठी dream हळूहळू पूर्ण व्हावी, तुझ्या मेहनतीला success मिळावी, आणि आयुष्यात तुला असे लोक भेटावेत जे तुझं मन खरंच समजून घेतील.</p>
+          <p>Life मध्ये पुढे कितीही changes आले, कितीही new chapters सुरू झाले, तरी तुझ्या चेहऱ्यावरचं ते genuine smile कधी कमी होऊ नये. <span class="em">Keep smiling, keep shining, and never doubt how special you are.</span></p>
+          <p>आज भरपूर enjoy कर, favourite cake खा, खूप photos काढ, स्वतःला spoil कर आणि हा दिवस पूर्णपणे तुझ्या नावावर कर. 🎂✨</p>
+          <p>And yes… हा surprise छोटा असेल, पण त्यामागची feeling छोटी नाही. ❤️</p>
+          <p><b>Happy Birthday once again, Sayali. May this year bring you more happiness, more success, more laughter and countless beautiful memories.</b></p>
+          <p>— <span class="em">Soham ❤️</span></p>
+        </div>
+      </div>
+      <button class="btn secondary readmore" id="readMore">Read More ❤️</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="gallery-head reveal">
+      <div class="eyebrow">One photo, a thousand feelings</div>
+      <h2>Sayali's Memory <span class="gradient-text">Gallery</span></h2>
+      <p class="lead" style="margin:auto">Exactly the photo shared for this surprise — nothing extra, nothing random. ❤️</p>
+    </div>
+    <div class="gallery">
+      <article class="memory glass reveal" data-index="0" tabindex="0" role="button" aria-label="Open Sayali photo">
+        <img src="photos/sayali-01.png" alt="Sayali in a red saree" loading="lazy">
+        <div class="memory-info"><h3>That Smile ❤️</h3><p>Some smiles deserve to be remembered forever.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">Just a little fun</div>
+      <h2>Okay Sayali… आता थोडं smile कर 😁❤️</h2>
+    </div>
+    <div class="fun-grid">
+      <article class="fun-card glass reveal" data-title="Secret Message" data-message="Tu kharach khup special ahes. Never forget that ❤️"><div class="emoji">❤️</div><h3>Secret Message</h3><p>Tap me</p></article>
+      <article class="fun-card glass reveal" data-title="One More Surprise" data-message="Soham अजूनही काही surprises लपवून ठेवतोय 😌❤️"><div class="emoji">🎁</div><h3>One More Surprise</h3><p>Tap me</p></article>
+      <article class="fun-card glass reveal" data-title="Birthday Challenge" data-message="Today mission: Smile unlimited 😄"><div class="emoji">🎂</div><h3>Birthday Challenge</h3><p>Tap me</p></article>
+      <article class="fun-card glass reveal" data-title="Your Superpower" data-message="Your smile can make an ordinary moment feel special."><div class="emoji">✨</div><h3>Your Superpower</h3><p>Tap me</p></article>
+      <article class="fun-card glass reveal" data-title="Cute Reminder" data-message="You deserve all the happiness in the world ❤️"><div class="emoji">🦋</div><h3>Cute Reminder</h3><p>Tap me</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="romance">
+  <div class="container reveal">
+    <span class="heart-core">❤️</span>
+    <div class="eyebrow">A little thought</div>
+    <h2>Some Connections Are <span class="gradient-text">Special ❤️</span></h2>
+    <p class="quote">“Kahi people life madhye randomly yetat… pan kahi people हळूहळू आपल्या memories चा खूप special part बनतात.”</p>
+    <h2 style="margin-top:30px">Soham × Sayali <span class="gradient-text">❤️</span></h2>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="wish-card glass reveal">
+      <div class="eyebrow">From the heart</div>
+      <h2>My Birthday Wish For You ❤️</h2>
+      <div class="wish-list">
+        <div>“May you always have reasons to smile.”</div>
+        <div>“May every dream you have slowly become reality.”</div>
+        <div>“May your life be filled with beautiful people, beautiful memories and beautiful moments.”</div>
+      </div>
+      <div class="wish-big gradient-text">Never stop being the beautiful person you are. ❤️</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container mission">
+    <div class="reveal">
+      <div class="eyebrow">Your only assignment today</div>
+      <h2>Sayali's Birthday Mission 🎀</h2>
+    </div>
+    <div class="mission-list reveal" id="mission">
+      <div class="mission-item">✅ Smile unlimited 😄</div><div class="mission-item">✅ Enjoy your special day 🎂</div>
+      <div class="mission-item">✅ Eat your favourite cake 🍰</div><div class="mission-item">✅ Take lots of pictures 📸</div>
+      <div class="mission-item">✅ Make beautiful memories ✨</div><div class="mission-item">✅ Stay happy ❤️</div>
+      <div class="mission-item">✅ Keep shining 🌟</div><div class="mission-item">✅ Never forget how special you are 💗</div>
+    </div>
+  </div>
+</section>
+
+<section class="signature">
+  <div class="container">
+    <div class="signature-card glass reveal">
+      <div class="eyebrow">Before the last page</div>
+      <h2>One Last Thing…</h2>
+      <p class="lead" style="margin:auto">This isn't just a website.<br>It's a small digital memory…<br>made with time, effort and a lot of heart.</p>
+      <div class="scribble gradient-text">— Soham ❤️</div>
+    </div>
+  </div>
+</section>
+
+<section id="ending">
+  <div class="end-stars" id="endStars"></div>
+  <div class="ending-content">
+    <div class="end-heart ending-line">❤️</div>
+    <p class="ending-line">Before you leave…</p>
+    <p class="ending-line">Remember one thing…</p>
+    <h2 class="ending-line gradient-text">You are special, Sayali. ❤️</h2>
+    <h2 class="ending-line">Happy Birthday Sayali Modak 🎂</h2>
+    <p class="ending-line" style="color:#d8cbd9;font-size:1.1rem">Keep smiling. Keep shining. Always. ✨</p>
+    <h2 class="ending-line gradient-text" style="margin-top:35px">With lots of love,<br>Soham ❤️</h2>
+  </div>
+</section>
+</main>
+
+<div class="modal-backdrop" id="messageModal">
+  <div class="modal glass" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="icon-btn close" id="modalClose" aria-label="Close">×</button>
+    <div class="eyebrow">A tiny surprise</div><h3 id="modalTitle"></h3><p id="modalMessage"></p>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="lightbox">
+  <div class="modal glass lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div style="display:flex;justify-content:space-between;align-items:center"><div class="counter" id="counter">1 / 1</div><button class="icon-btn" id="lightClose" aria-label="Close photo viewer">×</button></div>
+    <div class="lightbox-image-wrap"><img id="lightImg" src="photos/sayali-01.png" alt="Sayali enlarged"></div>
+    <div>
+      <div class="lightbox-tools">
+        <button class="icon-btn" id="prevPhoto" aria-label="Previous photo">‹</button>
+        <button class="icon-btn" id="zoomOut" aria-label="Zoom out">−</button>
+        <button class="icon-btn" id="zoomReset" aria-label="Reset zoom">1×</button>
+        <button class="icon-btn" id="zoomIn" aria-label="Zoom in">+</button>
+        <button class="icon-btn" id="nextPhoto" aria-label="Next photo">›</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (s,root=document)=>root.querySelector(s);
+const $$ = (s,root=document)=>[...root.querySelectorAll(s)];
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function burstConfetti(){
+  const box=$('#confetti');
+  for(let i=0;i<95;i++){
+    const el=document.createElement('span'); el.className='conf';
+    el.style.left=(Math.random()*100)+'%';
+    el.style.setProperty('--x',((Math.random()-.5)*260)+'px');
+    el.style.setProperty('--r',((Math.random()-.5)*900)+'deg');
+    el.style.animationDelay=(Math.random()*.35)+'s';
+    el.style.background=['#ff5ca8','#b894ff','#fff','#ffd36e','#7de2ff'][i%5];
+    el.style.transform=`rotate(${Math.random()*360}deg)`;
+    box.appendChild(el);
+    setTimeout(()=>el.remove(),2300);
+  }
+}
+function spawnPetals(){
+  if(reduced)return;
+  setInterval(()=>{
+    const p=document.createElement('div'); p.className='petal'; p.textContent='🌹';
+    p.style.left=(Math.random()*100)+'vw'; p.style.setProperty('--drift',((Math.random()-.5)*220)+'px');
+    p.style.animationDuration=(7+Math.random()*7)+'s'; p.style.fontSize=(12+Math.random()*12)+'px';
+    document.body.appendChild(p); setTimeout(()=>p.remove(),15000);
+  },850);
+}
+function makeStars(){
+  const wrap=$('#endStars');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('i');s.className='star';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=Math.random()*3+'s';s.style.opacity=(.25+Math.random()*.7);
+    wrap.appendChild(s);
+  }
+}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+
+$('#openBtn').addEventListener('click',()=>{
+  burstConfetti();
+  const opening=$('#opening'); opening.classList.add('closed'); document.body.classList.remove('locked');
+  setTimeout(()=>$$('.reveal').forEach((e,i)=>setTimeout(()=>e.classList.add('visible'),Math.min(i*70,500))),250);
+  spawnPetals(); makeStars();
+});
+
+const audio=$('#audio'), playBtn=$('#playBtn'), seek=$('#seek'), current=$('#current'), duration=$('#duration'), musicCard=$('#musicCard'), wave=$('#wave');
+for(let i=0;i<34;i++){const b=document.createElement('i');b.style.setProperty('--h',(12+Math.random()*30)+'px');b.style.setProperty('--d',(Math.random()*-.9)+'s');wave.appendChild(b)}
+function fmt(sec){if(!isFinite(sec))return '0:00';return Math.floor(sec/60)+':'+String(Math.floor(sec%60)).padStart(2,'0')}
+audio.addEventListener('loadedmetadata',()=>{duration.textContent=fmt(audio.duration);seek.max=audio.duration});
+audio.addEventListener('timeupdate',()=>{current.textContent=fmt(audio.currentTime);seek.value=audio.currentTime});
+audio.addEventListener('play',()=>{playBtn.textContent='❚❚';musicCard.classList.add('playing')});
+audio.addEventListener('pause',()=>{playBtn.textContent='▶';musicCard.classList.remove('playing')});
+playBtn.addEventListener('click',()=>audio.paused?audio.play().catch(()=>toast('Tap play again to start the song.')):audio.pause());
+seek.addEventListener('input',()=>audio.currentTime=Number(seek.value));
+audio.addEventListener('ended',()=>{seek.value=0});
+
+$('#readMore').addEventListener('click',()=>{
+  const l=$('#letter');l.classList.toggle('expanded');$('#readMore').textContent=l.classList.contains('expanded')?'Show Less ↑':'Read More ❤️';
+});
+
+const messageModal=$('#messageModal');
+$$('.fun-card').forEach(card=>card.addEventListener('click',()=>{
+  $('#modalTitle').textContent=card.dataset.title;$('#modalMessage').textContent=card.dataset.message;messageModal.classList.add('open');document.body.classList.add('locked');
+}));
+function closeMessage(){messageModal.classList.remove('open');document.body.classList.remove('locked')}
+$('#modalClose').addEventListener('click',closeMessage);messageModal.addEventListener('click',e=>{if(e.target===messageModal)closeMessage()});
+
+const images=['photos/sayali-01.png'];
+let photoIndex=0, zoom=1, touchStartX=0;
+const lightbox=$('#lightbox'), lightImg=$('#lightImg');
+function openLight(i=0){photoIndex=i;zoom=1;updateLight();lightbox.classList.add('open');document.body.classList.add('locked')}
+function updateLight(){lightImg.src=images[photoIndex];lightImg.style.transform=`scale(${zoom})`;$('#counter').textContent=`${photoIndex+1} / ${images.length}`;$('#prevPhoto').disabled=images.length<2;$('#nextPhoto').disabled=images.length<2}
+function closeLight(){lightbox.classList.remove('open');document.body.classList.remove('locked')}
+$$('.memory').forEach((card,i)=>{card.addEventListener('click',()=>openLight(i));card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openLight(i)})});
+$('#lightClose').addEventListener('click',closeLight);lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLight()});
+$('#zoomIn').addEventListener('click',()=>{zoom=Math.min(3,zoom+.25);updateLight()});
+$('#zoomOut').addEventListener('click',()=>{zoom=Math.max(.75,zoom-.25);updateLight()});
+$('#zoomReset').addEventListener('click',()=>{zoom=1;updateLight()});
+$('#prevPhoto').addEventListener('click',()=>{if(images.length>1){photoIndex=(photoIndex-1+images.length)%images.length;zoom=1;updateLight()}});
+$('#nextPhoto').addEventListener('click',()=>{if(images.length>1){photoIndex=(photoIndex+1)%images.length;zoom=1;updateLight()}});
+lightImg.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX},{passive:true});
+lightImg.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-touchStartX;if(Math.abs(dx)>55&&images.length>1){if(dx<0)$('#nextPhoto').click();else $('#prevPhoto').click()}},{passive:true});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeMessage();closeLight()}
+  if(lightbox.classList.contains('open')){
+    if(e.key==='ArrowLeft'&&images.length>1)$('#prevPhoto').click();
+    if(e.key==='ArrowRight'&&images.length>1)$('#nextPhoto').click();
+    if(e.key==='+')$('#zoomIn').click(); if(e.key==='-')$('#zoomOut').click();
+  }
+});
+
+const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  if(entry.isIntersecting){entry.target.classList.add('visible');if(entry.target.id==='mission')entry.target.parentElement.classList.add('revealed');}
+}),{threshold:.12});
+$$('.reveal').forEach(e=>observer.observe(e));
+</script>
+</body>
+</html>
